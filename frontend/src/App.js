@@ -14,9 +14,9 @@ class App extends Component {
     try {
 
       await axios.get(this.url)
-      .then(res => {
-        this.setState({ todos: res.data });
-      })
+        .then(res => {
+          this.setState({ todos: res.data });
+        })
     } catch (error) {
       console.log(error);
     }
@@ -26,20 +26,32 @@ class App extends Component {
 
   state = {
     todos: [],
-    data:[]
+    submitData: {
+      title: '',
+      body: ''
+    }
   };
 
   myChangeHandler = (event) => {
-    let title = event.target.name;
-    let val = event.target.value;
-    // this.setState({[title]: val});
-    this.setState({data:{[title]: val}});
+    const value = event.target.value;
+    this.setState(
+      {
+        submitData: {
+          ...this.state.submitData,
+          [event.target.name]: value
+
+        }
+      }
+    );
+  }
+
+  mySubmitHandler = (event) => {
+    event.preventDefault();
 
   }
 
   render() {
 
-    console.log(this.state);
 
     return (
       <div className='App'>
@@ -48,17 +60,17 @@ class App extends Component {
             <h1>{todo.title}</h1>
             <p>{todo.body}</p>
           </div>
-          
+
         ))}
-      <form onSubmit={this.mySubmitHandler}>
-      <input type="text" name="title" placeholder="title" onChange={this.myChangeHandler}></input>
-      <br></br>
-      <br></br>
-      <textarea name="des" placeholder="description" onChange={this.myChangeHandler}></textarea>
-      <br></br>
-      <br></br>
-      <input type="submit" value="Submit"/>
-      </form>
+        <form onSubmit={this.mySubmitHandler}>
+          <input type="text" name="title" placeholder="title" onChange={this.myChangeHandler}></input>
+          <br></br>
+          <br></br>
+          <textarea name="body" placeholder="description" onChange={this.myChangeHandler}></textarea>
+          <br></br>
+          <br></br>
+          <input type="submit" value="Submit" />
+        </form>
       </div>
 
     );
