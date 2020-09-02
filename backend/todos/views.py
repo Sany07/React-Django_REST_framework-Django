@@ -5,9 +5,9 @@ from.serializers import TodoSerializer
 
 
 class TodoListView(generics.ListCreateAPIView):
-    queryset = Todo.objects.all()
+    queryset = Todo.objects.order_by('-id')
     serializer_class = TodoSerializer
 
-class TodoDetailView(generics.RetrieveAPIView):
+class TodoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
