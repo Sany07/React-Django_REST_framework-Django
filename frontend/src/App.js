@@ -7,19 +7,18 @@ import { Button } from '@material-ui/core';
 class App extends Component {
   state = {
     todos: [],
-    update: false,
     submitData: {
       title: '',
       body: ''
     },
+    update: false,
   };
 
-url = 'http://127.0.0.1:8000/api/';
+  url = 'http://127.0.0.1:8000/api/';
 
   async componentDidMount() {
     const fetchdata = await fetchData();
     this.setState({ todos: fetchdata });
-
   }
   // Data = async () => {
   //   try {
@@ -33,9 +32,6 @@ url = 'http://127.0.0.1:8000/api/';
   //   }
 
   // }
-
-
-
 
   myChangeHandler = (event) => {
     const value = event.target.value;
@@ -52,8 +48,8 @@ url = 'http://127.0.0.1:8000/api/';
 
   mySubmitHandler = (e) => {
     e.preventDefault();
-
-    axios.post(this.url, {
+    const url = `${this.url}todos/`
+    axios.post(url, {
       title: this.state.submitData.title,
       body: this.state.submitData.body,
     })
@@ -100,8 +96,8 @@ url = 'http://127.0.0.1:8000/api/';
     console.log(this.state);
 
   }
-  
-  myUpdateHandler=(e)=>{
+
+  myUpdateHandler = (e) => {
     e.preventDefault();
     const updateURL = `${this.url}todo/${this.state.submitData.id}/`
     axios.put(updateURL, {
@@ -109,25 +105,25 @@ url = 'http://127.0.0.1:8000/api/';
       body: this.state.submitData.body,
     })
       .then(response => {
-          if (response.status === 200) {
+        if (response.status === 200) {
 
-            this.componentDidMount();
-            this.setState({
-              submitData: {
-                title: '',
-                body: ''
-              },
-              update:false
-            })
+          this.componentDidMount();
+          this.setState({
+            submitData: {
+              title: '',
+              body: ''
+            },
+            update: false
+          })
 
-          }
+        }
       })
       .catch(error => {
-          console.log(error);
+        console.log(error);
       });
 
-    }
-  
+  }
+
 
   render() {
 
