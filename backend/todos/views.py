@@ -10,6 +10,8 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
+
 class TodoListView(generics.ListCreateAPIView):
     queryset = Todo.objects.order_by('-id')
     serializer_class = TodoSerializer
